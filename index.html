@@ -1,3 +1,114 @@
 <script>
-	alert('his');
+	
+	
+	var poker = {
+	
+		color : ['S', 'H', 'D', 'C'],
+		
+		number : ['A', '2', '3', '4', '5',
+				  '6', '7', '8', '9', '10',
+				  'J', 'Q', 'K'],
+		cards : [],
+		
+		shuffle_cnt : 100,
+	
+		createNew : function() {
+			
+			var poker = {};
+			
+			this.createCards();
+			this.shuffle();
+
+			poker.cards = this.cards;
+			poker.draw = this.draw;
+			poker.color = this.color.length;
+			poker.number = this.number.length;
+			poker.sort = this.sort;
+			poker.xxx = this.xxx;
+			
+			return poker;
+		
+		},
+		createCards : function() {
+
+			var i = 0, j = 0;
+		
+			for(i; i<this.color.length; i++) {
+			
+				this.cards[i] = [];
+				j = 0;
+				
+				for(j; j<this.number.length; j++) {
+					this.cards[i][j] = this.color[i] + this.number[j];
+				}
+
+			}
+			
+		},
+		shuffle : function() {
+			var i = 0, c = 0, n = 0, tmp = '';
+			
+			for(i; i<this.shuffle_cnt; i++) {
+			
+				c1 = parseInt(Math.random() * this.color.length);
+				n1 = parseInt(Math.random() * this.number.length);
+			
+				c2 = parseInt(Math.random() * this.color.length);
+				n2 = parseInt(Math.random() * this.number.length);
+
+				//console.log(c1 + '_' + n1 + '_' + c2 + '_' + n2);
+				
+				tmp = this.cards[c1][n1];
+				this.cards[c1][n1] = this.cards[c2][n2];
+				this.cards[c2][n2] = tmp;
+
+			}
+		
+		},
+		draw : function(cnt) {
+			var i = 0, j = 0, c = [];
+			for(i; i<this.color; i++) {
+				
+				for(j; j<this.number; j++) {
+
+					if(this.cards[i][j] != '' && cnt > 0) {
+						c[cnt-1] = this.cards[i][j];
+						this.cards[i][j] = '';
+						cnt--;
+					}
+					
+					if(cnt == 0) {
+						return c;
+					}
+				}
+			}
+		
+		}
+		/*,
+		sort : function(cards) {
+
+			var i = 0, j = 1;
+
+			for(i; i<cards.length; i++) {
+
+				for(j+i; j<cards.length; j++) {
+
+					console.log(j+'_'+cards[j]);
+			
+				}		
+
+			}
+		
+		}*/
+		
+	};
+	
+	
+	var cards = poker.createNew();
+
+	var list = cards.draw(5);
+	
+	console.log(list);
+
+	
 </script>
